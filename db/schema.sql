@@ -22,6 +22,7 @@ finish_position INTEGER,
 points REAL,
 status TEXT,
 
+UNIQUE(race_id, driver_id),
 FOREIGN KEY (race_id)   REFERENCES races(race_id),
 FOREIGN KEY (driver_id) REFERENCES drivers(driver_id)
 );
@@ -35,6 +36,7 @@ q1_time TEXT,
 q2_time TEXT,
 q3_time TEXT,
 
+UNIQUE(race_id, driver_id),
 FOREIGN KEY (race_id)   REFERENCES races(race_id),
 FOREIGN KEY (driver_id) REFERENCES drivers(driver_id)
 );
@@ -46,6 +48,7 @@ driver_id TEXT NOT NULL,
 stop INTEGER,
 duration REAL,
 
+UNIQUE(race_id, driver_id),
 FOREIGN KEY (race_id)   REFERENCES races(race_id),
 FOREIGN KEY (driver_id) REFERENCES drivers(driver_id)
 );
@@ -58,6 +61,7 @@ score REAL,
 elo_delta REAL,
 elo REAL,
 
+UNIQUE(race_id, driver_id),
 FOREIGN KEY (race_id)   REFERENCES races(race_id),
 FOREIGN KEY (driver_id) REFERENCES drivers(driver_id)
 );
