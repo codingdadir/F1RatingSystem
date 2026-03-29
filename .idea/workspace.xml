@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="976f9cd1-0cf0-4a06-a32b-0a9033b6fe04" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db/schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/elo.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/elo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pipeline/fetch_jolipica.py" beforeDir="false" afterPath="$PROJECT_DIR$/pipeline/fetch_jolipica.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pipeline/load_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/pipeline/load_db.py" afterDir="false" />
     </list>
@@ -43,6 +43,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.elo.executor": "Run",
     "Python.fetch_jolipica.executor": "Run",
     "Python.load_db.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",

@@ -7,8 +7,9 @@ def safe_get(url):
     while True:
         response = requests.get(url)
         if response.status_code == 429:
-            print("Rate limited, waiting 1 hour...")
-            time.sleep(3600)
+            for i in range(120, 0, -1):
+                print(f"Rate limited, retrying in {i}s...", end="\r")
+                time.sleep(1)
         else:
             return response
 
@@ -108,3 +109,16 @@ def fetch_pitstops(year, races):
 
         time.sleep(0.3)
     return all_pits
+
+def fetch_constructor_standing(year):
+    url = f"https://api.jolpi.ca/ergast/f1/{year}/constructorstandings/"
+    print(f"Fetching {year} standings")
+    response = safe_get(url)
+    data = response.json()
+
+    standings_lists = data["MRData"]["StandingsTable"]["StandingsLists"]
+    if not standings_lists:
+        return []
+
+    return standings_lists[0]["ConstructorStandings"]
+

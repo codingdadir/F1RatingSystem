@@ -17,6 +17,7 @@ CREATE TABLE results (
 result_id INTEGER PRIMARY KEY,
 race_id INTEGER NOT NULL,
 driver_id TEXT NOT NULL,
+constructor_id TEXT,
 grid_position INTEGER,
 finish_position INTEGER,
 points REAL,
@@ -31,6 +32,7 @@ CREATE TABLE qualifying (
 qual_id INTEGER PRIMARY KEY,
 race_id INTEGER NOT NULL,
 driver_id TEXT NOT NULL,
+constructor_id TEXT,
 position INTEGER,
 q1_time TEXT,
 q2_time TEXT,
@@ -48,7 +50,7 @@ driver_id TEXT NOT NULL,
 stop INTEGER,
 duration REAL,
 
-UNIQUE(race_id, driver_id),
+UNIQUE(race_id, driver_id, stop),
 FOREIGN KEY (race_id)   REFERENCES races(race_id),
 FOREIGN KEY (driver_id) REFERENCES drivers(driver_id)
 );
@@ -64,4 +66,12 @@ elo REAL,
 UNIQUE(race_id, driver_id),
 FOREIGN KEY (race_id)   REFERENCES races(race_id),
 FOREIGN KEY (driver_id) REFERENCES drivers(driver_id)
+);
+
+CREATE TABLE constructor_standings (
+    season          INTEGER NOT NULL,
+    constructor_id  TEXT    NOT NULL,
+    final_position  INTEGER,
+    total_points    REAL,
+    PRIMARY KEY (season, constructor_id)
 );
