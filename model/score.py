@@ -1,5 +1,7 @@
 import sqlite3
 import os
+import math
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 conn = sqlite3.connect(os.path.join(BASE_DIR, "db", "database.db"))
@@ -80,6 +82,118 @@ def get_race_data(race_id):
     return drivers, teammates
 
 
+def compute_finish_score(drivers, teammates, constructor_avgs, k=1):
+    did_not_start = {
+        driver_id: data for driver_id, data in drivers.items()
+        if data["grid_position"] is None or data["status"] == "Did not start"
+    } # Drivers who did not start
+    started = {
+        driver_id: data for driver_id, data in drivers.items()
+        if driver_id not in did_not_start
+    } # Drivers who started
+    DNF_STATUSES = {"Accident", "Collision", "Spun off", "Collision damage", "Retired"} # DNF Statuses
+
+    n = len(started) # Number of drivers who started the race
+
+    scores = {}
+
+    for driver, data in started.items():
+        finish = data["finish_position"]
+        raw = (n - 2 * finish + 1) / (n-1)
+
+        constructor = data["constructor_id"]
+        teammate = None
+        teammate_delta = 0
+
+        for t in teammates[constructor]: # finds a drivers teamamte
+            if t != driver:
+                teammate = t
+
+        if teammate in started and drivers[teammate]["status"] not in DNF_STATUSES and data["status"] not in DNF_STATUSES: # checks if drivers teamate finishes race
+            teammate_delta = started[teammate]["finish_position"] - finish
+
+        expected = constructor_avgs[constructor]["avg_finish"]
+        overperf = expected - finish
+        context = 1 + (overperf / n)
+
+        scores[driver] = context * (k * raw + teammate_delta)
+
+    return scores
 
 
+def compute_positions_score(drivers, k=5):
+    did_not_start = {
+        driver_id: data for driver_id, data in drivers.items()
+        if data["grid_position"] is None or data["status"] == "Did not start"
+    }  # Drivers who did not start
+    started = {
+        driver_id: data for driver_id, data in drivers.items()
+        if driver_id not in did_not_start
+    }  # Drivers who started
 
+    scores = {}
+
+    for driver, data in started.items():
+
+        start = data["grid_position"]
+        finish = data["finish_position"]
+        if start == finish:
+            print(driver)
+        if finish is None or start is None:
+            scores[driver] = 0
+            continue
+
+        if start == 0:
+            start = len(started) + 1
+
+        if finish < start:
+            score = sum(math.exp(-p / k) for p in range(finish, start))
+        elif finish > start:
+            score = -sum(math.exp(-p / k) for p in range(start, finish))
+        else:
+            if finish <= 10:
+                score = math.exp(-finish / k)
+            else:
+                score = 0
+
+        scores[driver] = score
+
+
+    return scores
+
+# def compute_quali_score(drivers, teammates, constructor_avgs, k=1):
+#     n = len(drivers) # Number of drivers who started the race
+#
+#     scores = {}
+#
+#     for driver, data in drivers.items:
+#         finish = data["position"]
+#         raw = (n - 2 * finish + 1) / (n-1)
+#
+#         constructor = data["constructor_id"]
+#         teammate = None
+#         teammate_delta = 0
+#
+#         for t in teammates[constructor]: # finds a drivers teamamte
+#             if t != driver:
+#                 teammate = t
+#
+#         if teammate in started and drivers[teammate]["status"] not in DNF_STATUSES and data["status"] not in DNF_STATUSES: # checks if drivers teamate finishes race
+#             teammate_delta = started[teammate]["finish_position"] - finish
+#
+#         expected = constructor_avgs[constructor]["avg_finish"]
+#         overperf = expected - finish
+#         context = 1 + (overperf / n)
+#
+#         scores[driver] = context * (k * raw + teammate_delta)
+#
+#     return scores
+
+drivers, teamates = get_race_data(202404)
+compute_finish_score(drivers, teamates, get_constructor_averages(2024))
+
+finishes = compute_positions_score(drivers)
+sorted_dict = dict(sorted(finishes.items(), key=lambda item: item[1], reverse=True))
+
+for finish, value in sorted_dict.items():
+    print(f"{finish}'s score is {value}")
