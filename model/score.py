@@ -91,7 +91,7 @@ def compute_finish_score(drivers, teammates, constructor_avgs, k=1):
         driver_id: data for driver_id, data in drivers.items()
         if driver_id not in did_not_start
     } # Drivers who started
-    DNF_STATUSES = {"Accident", "Collision", "Spun off", "Collision damage", "Retired"} # DNF Statuses
+    DNF_STATUSES = {"Accident", "Collision", "Spun off", "Collision damage"} # DNF Statuses
 
     n = len(started) # Number of drivers who started the race
 
@@ -103,6 +103,7 @@ def compute_finish_score(drivers, teammates, constructor_avgs, k=1):
 
         constructor = data["constructor_id"]
         teammate = None
+        context = None
         teammate_delta = 0
 
         for t in teammates[constructor]: # finds a drivers teamamte
@@ -112,9 +113,12 @@ def compute_finish_score(drivers, teammates, constructor_avgs, k=1):
         if teammate in started and drivers[teammate]["status"] not in DNF_STATUSES and data["status"] not in DNF_STATUSES: # checks if drivers teamate finishes race
             teammate_delta = started[teammate]["finish_position"] - finish
 
-        expected = constructor_avgs[constructor]["avg_finish"]
-        overperf = expected - finish
-        context = 1 + (overperf / n)
+        if constructor not in constructor_avgs:
+            context = 1
+        else:
+            expected = constructor_avgs[constructor]["avg_finish"]
+            overperf = expected - finish
+            context = 1 + (overperf / n)
 
         scores[driver] = context * (k * raw + teammate_delta)
 
@@ -134,11 +138,9 @@ def compute_positions_score(drivers, k=5):
     scores = {}
 
     for driver, data in started.items():
-
         start = data["grid_position"]
         finish = data["finish_position"]
-        if start == finish:
-            print(driver)
+
         if finish is None or start is None:
             scores[driver] = 0
             continue
@@ -161,39 +163,77 @@ def compute_positions_score(drivers, k=5):
 
     return scores
 
-# def compute_quali_score(drivers, teammates, constructor_avgs, k=1):
-#     n = len(drivers) # Number of drivers who started the race
-#
-#     scores = {}
-#
-#     for driver, data in drivers.items:
-#         finish = data["position"]
-#         raw = (n - 2 * finish + 1) / (n-1)
-#
-#         constructor = data["constructor_id"]
-#         teammate = None
-#         teammate_delta = 0
-#
-#         for t in teammates[constructor]: # finds a drivers teamamte
-#             if t != driver:
-#                 teammate = t
-#
-#         if teammate in started and drivers[teammate]["status"] not in DNF_STATUSES and data["status"] not in DNF_STATUSES: # checks if drivers teamate finishes race
-#             teammate_delta = started[teammate]["finish_position"] - finish
-#
-#         expected = constructor_avgs[constructor]["avg_finish"]
-#         overperf = expected - finish
-#         context = 1 + (overperf / n)
-#
-#         scores[driver] = context * (k * raw + teammate_delta)
-#
-#     return scores
 
-drivers, teamates = get_race_data(202404)
-compute_finish_score(drivers, teamates, get_constructor_averages(2024))
+def compute_quali_score(drivers, teammates, constructor_avgs, k=10):
+    n = len(drivers) # Number of drivers who started the race
+    scores = {}
 
-finishes = compute_positions_score(drivers)
-sorted_dict = dict(sorted(finishes.items(), key=lambda item: item[1], reverse=True))
+    for driver, data in drivers.items():
+        finish = data["quali_position"]
 
-for finish, value in sorted_dict.items():
-    print(f"{finish}'s score is {value}")
+        if finish is None:
+            scores[driver] = 0
+            continue
+
+        raw = (n - 2 * finish + 1) / (n-1)
+
+        constructor = data["constructor_id"]
+        teammate = None
+        context = None
+        teammate_delta = 0
+
+        for t in teammates[constructor]: # finds a drivers teamamte
+            if t != driver:
+                teammate = t
+
+        if teammate and teammate in drivers and drivers[teammate]["quali_position"] is not None and data["quali_position"] is not None:
+            teammate_delta = drivers[teammate]["quali_position"] - finish
+
+        if constructor not in constructor_avgs:
+            context = 1
+        else:
+            expected = constructor_avgs[constructor]["avg_quali"]
+            if expected is None:
+                context = 1
+            else:
+                overperf = expected - finish
+                context = 1 + (overperf / n)
+
+        scores[driver] = context * (k * raw + teammate_delta)
+
+        if finish <= 10:
+            scores[driver] += math.exp(-finish / k)
+
+    return scores
+
+
+def compute_dnf_penalty(drivers, X=0.5):
+    DRIVER_FAULT_STATUSES = {"Accident", "Collision", "Spun off", "Collision damage"}
+    scores = {}
+    for driver, data in drivers.items():
+        if data["status"] in DRIVER_FAULT_STATUSES:
+            scores[driver] = -X
+        else:
+            scores[driver] = 0
+
+    return scores
+
+
+def compute_composite(drivers, finish_scores, positions_scores, quali_scores, dnf_scores, weights=(0.35, 0.25, 0.25, 0.15)):
+    w1, w2, w3, w4 = weights  # (0.35, 0.25, 0.25, 0.15)
+    final_scores = {}
+    for driver in drivers:
+        finish_score = finish_scores.get(driver, 0)
+        positions_score = positions_scores.get(driver, 0)
+        quali_score = quali_scores.get(driver, 0)
+        dnf_score = dnf_scores.get(driver, 0)
+
+        final_scores[driver] = (
+            w1 * finish_score +
+            w2 * positions_score +
+            w3 * quali_score +
+            w4 * dnf_score
+        )
+
+    return final_scores
+
