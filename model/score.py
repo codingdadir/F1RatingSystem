@@ -31,7 +31,7 @@ def get_constructor_averages(season):
 
     if season < 2006 or season > 2025:
         print("Invalid Season")
-        return
+        return None
 
     cursor.execute("""SELECT r.constructor_id,
         AVG(r.finish_position) AS avg_finish,

@@ -1,14 +1,24 @@
-import os
-import sqlite3
+def initialise_elo(drivers_ids):
+    return {driver_id: 1000.0 for driver_id in drivers_ids}
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-conn = sqlite3.connect(os.path.join(BASE_DIR, "db", "database.db"))
-cursor = conn.cursor()
 
-all_status = cursor.execute("SELECT grid_position FROM results")
-statuses = []
-for status in all_status:
-    if status[0] not in statuses:
-        statuses.append(status[0])
+def compute_elo_delta(composite_scores, K=32):
+    n = len(composite_scores)
+    delta = {}
 
-print(sorted(statuses))
+    sorted_drivers =  sorted(composite_scores.items(), key=lambda item: item[1], reverse=True)
+    for rank, (driver_id, score) in enumerate(sorted_drivers):
+        delta[driver_id] = K * (0.5 - rank / (n - 1))
+    return delta
+
+
+def update_elo(current_elo, deltas):
+    updated = current_elo.copy()
+
+    for driver_id, delta in deltas.items():
+        if driver_id in updated:
+            updated[driver_id] += delta
+        else:
+            updated[driver_id] = 1000 + delta
+    return updated
+
