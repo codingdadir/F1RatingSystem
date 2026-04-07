@@ -237,3 +237,12 @@ def compute_composite(drivers, finish_scores, positions_scores, quali_scores, dn
 
     return final_scores
 
+
+def get_all_drivers(start_year, end_year):
+    cursor.execute("""
+        SELECT DISTINCT r.driver_id 
+        FROM results r
+        JOIN races rc ON r.race_id = rc.race_id
+        WHERE rc.season BETWEEN ? AND ?
+    """, (start_year, end_year))
+    return [row["driver_id"] for row in cursor.fetchall()]

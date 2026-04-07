@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="976f9cd1-0cf0-4a06-a32b-0a9033b6fe04" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/model/runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/worktrees/agitated-pascal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/F1RatingSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/F1RatingSystem.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/elo.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/elo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/score.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/score.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,6 +30,9 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/pipeline/load_db.py" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -38,21 +44,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.elo.executor&quot;: &quot;Run&quot;,
-    &quot;Python.fetch_jolipica.executor&quot;: &quot;Run&quot;,
-    &quot;Python.load_db.executor&quot;: &quot;Run&quot;,
-    &quot;Python.score.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.elo.executor": "Run",
+    "Python.fetch_jolipica.executor": "Run",
+    "Python.load_db.executor": "Run",
+    "Python.runner.executor": "Run",
+    "Python.score.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "full.screen.before.presentation.mode": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Dadir/Documents/Coding Stuff/Python Projects/F1RatingSystem",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Dadir\Documents\Coding Stuff\Python Projects\F1RatingSystem\db" />
@@ -88,6 +97,11 @@
           <url>file://$PROJECT_DIR$/model/score.py</url>
           <line>227</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/model/score.py</url>
+          <line>246</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
