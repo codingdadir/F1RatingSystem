@@ -91,5 +91,5 @@ pip install -r requirements.txt
 python pipeline/load_db.py        # fetch and load data
 python model/runner.py            # calculate ratings
 python model/validate.py          # run validation
-streamlit run dashboard/app.py    # launch dashboard
+streamlit run dashboard/Home.py    # launch dashboard
 ```
