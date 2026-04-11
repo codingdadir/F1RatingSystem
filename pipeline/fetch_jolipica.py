@@ -1,6 +1,4 @@
 import time
-
-
 import requests
 
 def safe_get(url):
@@ -121,4 +119,17 @@ def fetch_constructor_standing(year):
         return []
 
     return standings_lists[0]["ConstructorStandings"]
+
+def fetch_driver_standings(year):
+    url = f"https://api.jolpi.ca/ergast/f1/{year}/driverstandings/"
+    response = safe_get(url)
+
+    data = response.json()
+
+    standings_list = data["MRData"]["StandingsTable"]["StandingsLists"]
+
+    if not standings_list:
+        return []
+
+    return standings_list[0]["DriverStandings"]
 

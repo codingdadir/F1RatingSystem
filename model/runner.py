@@ -96,8 +96,6 @@ def get_final_leaderboard(start, end, min_races=40):
     return cursor.fetchall()
 
 
-
-
 calculate_ratings(2006, 2025)
 print("---------------------------------------------------------------------------------------------------------------")
 leaderboard = get_final_leaderboard(2006, 2025)
