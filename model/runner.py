@@ -1,15 +1,14 @@
 import sqlite3
 import os
-from elo import initialise_elo, compute_elo_delta, update_elo
-from score import get_races_in_range, get_constructor_averages, get_race_data, compute_finish_score, compute_quali_score, compute_positions_score, compute_composite, compute_dnf_penalty, get_all_drivers
+from model.elo import initialise_elo, compute_elo_delta, update_elo
+from model.score import get_races_in_range, get_constructor_averages, get_race_data, compute_finish_score, compute_quali_score, compute_positions_score, compute_composite, compute_dnf_penalty, get_all_drivers
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-conn = sqlite3.connect(os.path.join(BASE_DIR, "db", "database.db"))
-
-conn.row_factory = sqlite3.Row
-cursor = conn.cursor()
 
 def create_ratings_table(start_year, end_year):
+    conn = sqlite3.connect(os.path.join(BASE_DIR, "db", "database.db"))
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
     table = f"ratings_{start_year}_{end_year}"
 
     cursor.execute(f"DROP TABLE IF EXISTS {table}")
@@ -26,9 +25,13 @@ def create_ratings_table(start_year, end_year):
     """)
 
     conn.commit()
+    conn.close()
 
 
 def save_ratings(table, race_id, composite, deltas, elo):
+    conn = sqlite3.connect(os.path.join(BASE_DIR, "db", "database.db"))
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
     for driver_id in composite:
         cursor.execute(
             f"INSERT INTO {table} VALUES (?, ?, ?, ?, ?)",
@@ -41,6 +44,7 @@ def save_ratings(table, race_id, composite, deltas, elo):
             )
         )
     conn.commit()
+    conn.close()
 
 
 def calculate_ratings(start, end):
@@ -51,6 +55,14 @@ def calculate_ratings(start, end):
     constructor_avgs = {}
 
     table = f"ratings_{start}_{end}"
+    conn = sqlite3.connect(os.path.join(BASE_DIR, "db", "database.db"))
+    cursor = conn.cursor()
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (table,))
+    if cursor.fetchone():
+        print(f"Skipping {start}-{end}, already exists")
+        conn.close()
+        return
+    conn.close()
 
     create_ratings_table(start, end)
 
@@ -77,7 +89,16 @@ def calculate_ratings(start, end):
     print(f"Ratings calculated for {start}-{end}")
 
 
-def get_final_leaderboard(start, end, min_races=40):
+def get_final_leaderboard(start, end, min_races):
+    conn = sqlite3.connect(os.path.join(BASE_DIR, "db", "database.db"))
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    table = f"ratings_{start}_{end}"
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (table,))
+    if not cursor.fetchone():
+        conn.close()
+        return []
     table = f"ratings_{start}_{end}"
     cursor.execute(f"""
         SELECT driver_id, elo
@@ -93,12 +114,18 @@ def get_final_leaderboard(start, end, min_races=40):
         )
         ORDER BY elo DESC
     """, (min_races,))
-    return cursor.fetchall()
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
 
-
-calculate_ratings(2006, 2025)
-print("---------------------------------------------------------------------------------------------------------------")
-leaderboard = get_final_leaderboard(2006, 2025)
-
-for row in leaderboard:
-    print(f"{row["driver_id"]}: {row["elo"]:.1f}")
+# def precompute_all_ranges():
+#     years = range(2006, 2026)
+#     total = sum(1 for s in years for e in years if e >= s)
+#     count = 0
+#     for start in years:
+#         for end in years:
+#             if end >= start:
+#                 count += 1
+#                 print(f"Computing {start}-{end} ({count}/{total})...")
+#                 calculate_ratings(start, end)
+#     print("All ranges computed.")

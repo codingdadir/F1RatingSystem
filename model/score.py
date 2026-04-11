@@ -4,12 +4,11 @@ import math
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-conn = sqlite3.connect(os.path.join(BASE_DIR, "db", "database.db"))
-
-conn.row_factory = sqlite3.Row
-cursor = conn.cursor()
 
 def get_races_in_range(start, end=None):
+    conn = sqlite3.connect(os.path.join(BASE_DIR, "db", "database.db"))
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
     if start < 2006:
         print("Invalid range")
         return []
@@ -23,12 +22,15 @@ def get_races_in_range(start, end=None):
     else:
         cursor.execute("""SELECT race_id, season, round, name, circuit, date FROM races WHERE season BETWEEN ? and ?
                        ORDER BY season ASC, round ASC""", (start, end))
-
-    return cursor.fetchall()
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
 
 
 def get_constructor_averages(season):
-
+    conn = sqlite3.connect(os.path.join(BASE_DIR, "db", "database.db"))
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
     if season < 2006 or season > 2025:
         print("Invalid Season")
         return None
@@ -45,11 +47,14 @@ def get_constructor_averages(season):
         GROUP BY r.constructor_id""", (season,))
 
     rows = cursor.fetchall()
-
+    conn.close()
     return {row["constructor_id"]: {"avg_finish": row["avg_finish"], "avg_quali": row["avg_quali"]} for row in rows}
 
 
 def get_race_data(race_id):
+    conn = sqlite3.connect(os.path.join(BASE_DIR, "db", "database.db"))
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
     if race_id < 200601 or race_id > 202599:
         print("Invalid Race ID")
         return []
@@ -78,7 +83,7 @@ def get_race_data(race_id):
         if cid not in teammates:
             teammates[cid] = []
         teammates[cid].append(row["driver_id"])
-
+    conn.close()
     return drivers, teammates
 
 
@@ -239,10 +244,15 @@ def compute_composite(drivers, finish_scores, positions_scores, quali_scores, dn
 
 
 def get_all_drivers(start_year, end_year):
+    conn = sqlite3.connect(os.path.join(BASE_DIR, "db", "database.db"))
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
     cursor.execute("""
         SELECT DISTINCT r.driver_id 
         FROM results r
         JOIN races rc ON r.race_id = rc.race_id
         WHERE rc.season BETWEEN ? AND ?
     """, (start_year, end_year))
-    return [row["driver_id"] for row in cursor.fetchall()]
+    rows = cursor.fetchall()
+    conn.close()
+    return [row["driver_id"] for row in rows]

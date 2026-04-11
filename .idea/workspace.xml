@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="976f9cd1-0cf0-4a06-a32b-0a9033b6fe04" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/dashboard/pages/1_Leaderboard.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashboard/pages/2_Driver_Comparison.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pipeline/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/validate.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/validate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pipeline/fetch_jolipica.py" beforeDir="false" afterPath="$PROJECT_DIR$/pipeline/fetch_jolipica.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/score.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/score.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,26 +134,5 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/model/score.py</url>
-          <line>221</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/model/score.py</url>
-          <line>227</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/model/score.py</url>
-          <line>246</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
