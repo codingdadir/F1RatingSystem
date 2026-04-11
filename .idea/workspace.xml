@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="976f9cd1-0cf0-4a06-a32b-0a9033b6fe04" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/dashboard/pages/1_Leaderboard.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dashboard/pages/2_Driver_Comparison.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pipeline/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashboard/flags.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashboard/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/F1RatingSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/F1RatingSystem.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/score.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/score.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/pages/1_Leaderboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/pages/1_Leaderboard.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +66,7 @@
     "full.screen.before.presentation.mode": "false",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/Dadir/Documents/Coding Stuff/Python Projects/F1RatingSystem",
+    "last_opened_file_path": "C:/Users/Dadir/Documents/Coding Stuff/Python Projects/F1RatingSystem/dashboard",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -79,6 +76,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Dadir\Documents\Coding Stuff\Python Projects\F1RatingSystem\dashboard" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Dadir\Documents\Coding Stuff\Python Projects\F1RatingSystem\db" />
       <recent name="C:\Users\Dadir\Documents\Coding Stuff\Python Projects\F1RatingSystem" />
