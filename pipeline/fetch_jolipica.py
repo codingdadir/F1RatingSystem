@@ -133,3 +133,4 @@ def fetch_driver_standings(year):
 
     return standings_list[0]["DriverStandings"]
 
+

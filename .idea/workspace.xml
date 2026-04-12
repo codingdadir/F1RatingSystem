@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="976f9cd1-0cf0-4a06-a32b-0a9033b6fe04" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/dashboard/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/app.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashboard/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/pages/2_Driver_Comparison.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/pages/2_Driver_Comparison.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/database.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pipeline/fetch_jolipica.py" beforeDir="false" afterPath="$PROJECT_DIR$/pipeline/fetch_jolipica.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,11 +51,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.2_Driver_Comparison.executor": "Run",
     "Python.elo.executor": "Run",
     "Python.fetch_jolipica.executor": "Run",
     "Python.load_db.executor": "Run",
     "Python.runner.executor": "Run",
     "Python.score.executor": "Run",
+    "Python.utils.executor": "Run",
     "Python.validate.executor": "Run",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
