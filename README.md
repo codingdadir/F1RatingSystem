@@ -85,7 +85,7 @@ The train/test gap is small (0.683 train vs 0.662 test), confirming the model ge
 ## Setup
 
 ```bash
-git clone https://github.com/yourusername/f1-rating-system
+git clone https://github.com/codingdadir/f1-rating-system
 cd f1-rating-system
 pip install -r requirements.txt
 python pipeline/load_db.py        # fetch and load data
